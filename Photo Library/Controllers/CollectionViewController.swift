@@ -1,5 +1,4 @@
 import UIKit
-import SwiftyKeychainKit
 
 class CollectionViewController: UIViewController {
     
@@ -19,7 +18,7 @@ class CollectionViewController: UIViewController {
     @IBAction func logOutPressed(_ sender: UIButton) {
         collectionView.reloadData()
         let password = ""
-        try? Manager.shared.keychain.set(password, for: Manager.shared.keychainkey)
+        Manager.shared.keychain.set(password, forKey: Manager.shared.keychainkey)
         self.navigationController?.popToRootViewController(animated: true)
     }
     

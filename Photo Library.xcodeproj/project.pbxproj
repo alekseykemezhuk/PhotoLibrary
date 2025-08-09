@@ -19,8 +19,8 @@
 		166F35A429C5C25E00409CB6 /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166F35A329C5C25E00409CB6 /* AddPhotoViewController.swift */; };
 		166F35A629C6F85500409CB6 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166F35A529C6F85500409CB6 /* Images.swift */; };
 		16FD7D8C29DEBFED00C803A5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FD7D8B29DEBFED00C803A5 /* CollectionViewCell.swift */; };
-		6F9EDA89001335EE14FE859C /* Pods_Photo_Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBBCE372050F8F76981C20F /* Pods_Photo_Library.framework */; };
 		D1282B002A264018001D53BC /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1282AFF2A264018001D53BC /* Manager.swift */; };
+		D14D14302E40A7E700DAF31B /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D14D142F2E40A7E700DAF31B /* KeychainSwift */; };
 		D16B1CC32A264A570092CDDF /* CollectionViewController + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B1CC22A264A570092CDDF /* CollectionViewController + extensions.swift */; };
 		D16B1CC52A264F3E0092CDDF /* UserDefaults + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B1CC42A264F3E0092CDDF /* UserDefaults + extensions.swift */; };
 		D16B1CC72A264FE60092CDDF /* AddPhotoViewController + extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B1CC62A264FE60092CDDF /* AddPhotoViewController + extensions.swift */; };
@@ -62,9 +62,6 @@
 		166F35A329C5C25E00409CB6 /* AddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		166F35A529C6F85500409CB6 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		16FD7D8B29DEBFED00C803A5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		7BBBCE372050F8F76981C20F /* Pods_Photo_Library.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC99EBC1D4758EF482FD2EE /* Pods-Photo Library.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Library.debug.xcconfig"; path = "Target Support Files/Pods-Photo Library/Pods-Photo Library.debug.xcconfig"; sourceTree = "<group>"; };
-		C0DA6606ECA1E2DFD594BAE5 /* Pods-Photo Library.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Library.release.xcconfig"; path = "Target Support Files/Pods-Photo Library/Pods-Photo Library.release.xcconfig"; sourceTree = "<group>"; };
 		D1282AFF2A264018001D53BC /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		D16B1CC22A264A570092CDDF /* CollectionViewController + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionViewController + extensions.swift"; sourceTree = "<group>"; };
 		D16B1CC42A264F3E0092CDDF /* UserDefaults + extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + extensions.swift"; sourceTree = "<group>"; };
@@ -78,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9EDA89001335EE14FE859C /* Pods_Photo_Library.framework in Frameworks */,
+				D14D14302E40A7E700DAF31B /* KeychainSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,14 +96,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		11CBEA6062E0302D864045DD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7BBBCE372050F8F76981C20F /* Pods_Photo_Library.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		1644F73429C8D979001003AD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,8 +114,6 @@
 			children = (
 				166F356A29C59F2000409CB6 /* Photo Library */,
 				166F356929C59F2000409CB6 /* Products */,
-				1DDFA407C1708037A275A3AC /* Pods */,
-				11CBEA6062E0302D864045DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,15 +148,6 @@
 				16FD7D8B29DEBFED00C803A5 /* CollectionViewCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		1DDFA407C1708037A275A3AC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7FC99EBC1D4758EF482FD2EE /* Pods-Photo Library.debug.xcconfig */,
-				C0DA6606ECA1E2DFD594BAE5 /* Pods-Photo Library.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		D16B1CBE2A2648AE0092CDDF /* Supporting files */ = {
@@ -225,11 +203,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 166F359229C59F2200409CB6 /* Build configuration list for PBXNativeTarget "Photo Library" */;
 			buildPhases = (
-				58C71F7E4720B0D9B58AC4DD /* [CP] Check Pods Manifest.lock */,
 				166F356429C59F2000409CB6 /* Sources */,
 				166F356529C59F2000409CB6 /* Frameworks */,
 				166F356629C59F2000409CB6 /* Resources */,
-				F1153E5779016C0C1B45C43F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,7 +260,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					166F356729C59F2000409CB6 = {
 						CreatedOnToolsVersion = 14.2;
@@ -308,6 +284,9 @@
 				Base,
 			);
 			mainGroup = 166F355F29C59F2000409CB6;
+			packageReferences = (
+				D14D142E2E40A7E700DAF31B /* XCRemoteSwiftPackageReference "keychain-swift" */,
+			);
 			productRefGroup = 166F356929C59F2000409CB6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,48 +324,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		58C71F7E4720B0D9B58AC4DD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Photo Library-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F1153E5779016C0C1B45C43F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Photo Library/Pods-Photo Library-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Photo Library/Pods-Photo Library-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Photo Library/Pods-Photo Library-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		166F356429C59F2000409CB6 /* Sources */ = {
@@ -496,6 +433,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -556,6 +494,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -576,7 +515,6 @@
 		};
 		166F359329C59F2200409CB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FC99EBC1D4758EF482FD2EE /* Pods-Photo Library.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -605,7 +543,6 @@
 		};
 		166F359429C59F2200409CB6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0DA6606ECA1E2DFD594BAE5 /* Pods-Photo Library.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -635,7 +572,6 @@
 		166F359629C59F2200409CB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -654,7 +590,6 @@
 		166F359729C59F2200409CB6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -673,7 +608,6 @@
 		166F359929C59F2200409CB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -690,7 +624,6 @@
 		166F359A29C59F2200409CB6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -744,6 +677,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D14D142E2E40A7E700DAF31B /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D14D142F2E40A7E700DAF31B /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D14D142E2E40A7E700DAF31B /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 166F356029C59F2000409CB6 /* Project object */;
 }

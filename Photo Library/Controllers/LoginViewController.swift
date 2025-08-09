@@ -1,5 +1,4 @@
 import UIKit
-import SwiftyKeychainKit
 
 class LoginViewController: UIViewController {
     
@@ -15,7 +14,7 @@ class LoginViewController: UIViewController {
     //MARK: - Properties
     
     var textY: CGFloat = 0
-    var correctPassword = try? Manager.shared.keychain.get(Manager.shared.keychainkey)
+    var correctPassword = Manager.shared.keychain.get(Manager.shared.keychainkey)
 
     //MARK: - Lifecycle methods
     

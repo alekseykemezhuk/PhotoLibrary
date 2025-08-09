@@ -1,5 +1,4 @@
 import UIKit
-import SwiftyKeychainKit
 
 class StartViewController: UIViewController {
 
@@ -8,7 +7,7 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let password = try? Manager.shared.keychain.get(Manager.shared.keychainkey)
+        let password = Manager.shared.keychain.get(Manager.shared.keychainkey)
         if password != "" && password != nil {
             showLoginVC()
         }

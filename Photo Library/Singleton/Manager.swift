@@ -1,5 +1,5 @@
 import UIKit
-import SwiftyKeychainKit
+import KeychainSwift
 
 class Manager {
     
@@ -9,8 +9,8 @@ class Manager {
     
     //MARK: - Properties
     
-    let keychain = Keychain(service: "password")
-    let keychainkey = KeychainKey<String>(key: "password")
+    let keychain = KeychainSwift()
+    let keychainkey = "password"
     
     //MARK: - Flow shared methods
     
