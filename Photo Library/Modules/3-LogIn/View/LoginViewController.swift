@@ -45,17 +45,14 @@ final class LoginViewController: UIViewController {
     
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
-        let keyboardLayout = view.keyboardLayoutGuide
-        let defaultOffset = layout.defaultOffset
-        let quaterOffset = layout.quaterOffset
         
         resetPasswordButton.snp.makeConstraints { make in
-            make.trailing.top.equalTo(safeArea).inset(quaterOffset)
+            make.trailing.top.equalTo(safeArea).inset(layout.quaterOffset)
         }
         
         passwordStackView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(safeArea)
-            make.bottom.equalTo(keyboardLayout.snp.top).offset(-defaultOffset)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-layout.defaultOffset)
         }
     }
     
@@ -84,7 +81,7 @@ final class LoginViewController: UIViewController {
         }, for: .touchUpInside)
     }
     
-    // MARK: - Private Methods
+    // MARK: - Bindings
     
     private func bindViewModel() {
         viewModel.onLogInSuccess = { [weak self] in
@@ -98,39 +95,41 @@ final class LoginViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
+    
     private func didTapLogin() {
         guard let password = passwordStackView.textField.text else { return }
         viewModel.didTapLogin(password)
     }
     
     private func showInvalidLoginAlert() {
-        let alertTitle = viewModel.strings.errorAlertTitle
-        let alertMessage = viewModel.strings.errorAlertMessage
-        let alertActionTitle = viewModel.strings.errorAlertOkButtonTitle
-        let alertAction = UIAlertAction(title: alertActionTitle, style: .default) { [weak self] _ in
+        let alertAction = UIAlertAction(title: viewModel.strings.errorAlertOkButtonTitle,
+                                        style: .default) { [weak self] _ in
             self?.passwordStackView.textField.text = ""
         }
-        showAlert(title: alertTitle, message: alertMessage, actions: [alertAction])
+        
+        showAlert(title: viewModel.strings.errorAlertTitle, message: viewModel.strings.errorAlertMessage,
+                  actions: [alertAction])
     }
     
     private func showResetPasswordAlert() {
-        let alertTitle = viewModel.strings.resetAlertTitle
-        let alertMessage = viewModel.strings.resetAlertMessage
-        let alertActionTitle = viewModel.strings.resetAlertOkButtonTitle
-        let alertOkAction = UIAlertAction(title: alertActionTitle,
+        let alertOkAction = UIAlertAction(title: viewModel.strings.resetAlertOkButtonTitle,
                                           style: .destructive) { [weak self] _ in
             self?.viewModel.resetPassword()
         }
+        
         let alertCancelAction = UIAlertAction(title: viewModel.strings.resetAlertCancelButtonTitle,
                                               style: .cancel)
-        showAlert(title: alertTitle, message: alertMessage, actions: [alertOkAction, alertCancelAction])
+        
+        showAlert(title: viewModel.strings.resetAlertTitle,
+                  message: viewModel.strings.resetAlertMessage,
+                  actions: [alertOkAction, alertCancelAction])
     }
 }
 
     // MARK: - Extensions
 
 extension LoginViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }

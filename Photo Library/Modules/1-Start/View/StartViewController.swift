@@ -41,10 +41,9 @@ final class StartViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
         signUpButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.leading.trailing.equalTo(safeArea).inset(layout.doubleOffset)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(layout.doubleOffset)
         }
     }
     

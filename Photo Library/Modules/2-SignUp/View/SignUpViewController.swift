@@ -43,13 +43,9 @@ final class SignUpViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
-        let keyboardLayout = view.keyboardLayoutGuide
-        let defaultOffset = layout.defaultOffset
-        
         passwordStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(safeArea)
-            make.bottom.equalTo(keyboardLayout.snp.top).offset(-defaultOffset)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-layout.defaultOffset)
         }
     }
     
@@ -69,7 +65,7 @@ final class SignUpViewController: UIViewController {
         }, for: .touchUpInside)
     }
     
-    // MARK: - Private methods
+    // MARK: - Bindings
     
     private func bindViewModel() {
         viewModel.onSignUpSuccess = { [weak self] in
@@ -80,19 +76,21 @@ final class SignUpViewController: UIViewController {
         }
     }
     
+    // MARK: - Private methods
+    
     private func didTapSave() {
         guard let password = passwordStackView.textField.text else { return }
         viewModel.didTapSave(password)
     }
      
     private func showErrorAlert() {
-        let alertTitle = viewModel.strings.alertTitle
-        let alertMessage = viewModel.strings.alertMessage
-        let doneButtonTitle = viewModel.strings.alertDoneButtonTitle
-        let doneAction = UIAlertAction(title: doneButtonTitle, style: .default) { [weak self] _ in
+        let doneAction = UIAlertAction(title: viewModel.strings.alertDoneButtonTitle,
+                                       style: .default) { [weak self] _ in
             self?.passwordStackView.textField.text = ""
         }
-        showAlert(title: alertTitle, message: alertMessage, actions: [doneAction])
+        
+        showAlert(title: viewModel.strings.alertTitle, message: viewModel.strings.alertMessage,
+                  actions: [doneAction])
     }
 }
 
