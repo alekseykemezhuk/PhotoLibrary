@@ -4,7 +4,7 @@ import SnapKit
 final class ButtonsStackView: UIStackView {
     
     let firstButton = UIButton(configuration: .gray())
-    let secondButtom = UIButton(configuration: .gray())
+    let secondButton = UIButton(configuration: .gray())
     private let layout = Layout.self
     
     override init(frame: CGRect) {
@@ -18,7 +18,7 @@ final class ButtonsStackView: UIStackView {
     
     private func setupHierarchy() {
         addArrangedSubview(firstButton)
-        addArrangedSubview(secondButtom)
+        addArrangedSubview(secondButton)
     }
     
     func setupButtonsAppearance(firstButtonTitle: String, secondButtonTitle: String) {
@@ -32,9 +32,9 @@ final class ButtonsStackView: UIStackView {
         firstButton.titleLabel?.lineBreakMode = .byClipping
         firstButton.titleLabel?.adjustsFontForContentSizeCategory = true
         
-        secondButtom.setTitle(secondButtonTitle, for: .normal)
-        secondButtom.titleLabel?.adjustsFontSizeToFitWidth = true
-        secondButtom.titleLabel?.lineBreakMode = .byClipping
-        secondButtom.titleLabel?.adjustsFontForContentSizeCategory = true
+        secondButton.setTitle(secondButtonTitle, for: .normal)
+        secondButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        secondButton.titleLabel?.lineBreakMode = .byClipping
+        secondButton.titleLabel?.adjustsFontForContentSizeCategory = true
     }
 }
