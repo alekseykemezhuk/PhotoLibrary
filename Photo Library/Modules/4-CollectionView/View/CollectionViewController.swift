@@ -46,19 +46,16 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        let stackViewSpacing = layout.stackViewSpacing
-        
         mainStackView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         collectionView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview()
-            make.bottom.equalTo(buttonsStackView.snp.top).offset(-stackViewSpacing)
+            make.leading.trailing.equalToSuperview()
         }
         
         buttonsStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(stackViewSpacing)
+            make.leading.trailing.equalToSuperview().inset(layout.stackViewSpacing)
             make.height.equalTo(mainStackView.snp.height).multipliedBy(layout.buttonsStackMultiplier)
         }
     }
