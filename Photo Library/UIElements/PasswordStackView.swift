@@ -54,7 +54,10 @@ final class PasswordStackView: UIStackView {
         label.textAlignment = .center
         label.font = fonts.titleFont
         
-        textField.placeholder = textFieldPlaceHolderText
+        textField.backgroundColor = .white
+        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: textFieldPlaceHolderText,
+                                                             attributes: [.foregroundColor: UIColor.lightGray])
         textField.borderStyle = .roundedRect
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no

@@ -43,7 +43,8 @@ final class StartViewController: UIViewController {
     private func setupConstraints() {
         signUpButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(layout.doubleOffset)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(layout.oneAndHalfOffset)
+            make.height.equalTo(signUpButton.snp.width).multipliedBy(layout.buttonHeightMultiplier)
         }
     }
     
