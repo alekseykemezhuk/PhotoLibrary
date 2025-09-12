@@ -1,10 +1,11 @@
 import UIKit
 
 extension UIViewController {
-    func showAlert(title: String, message: String,
-                   actions: [UIAlertAction] = [UIAlertAction(title: "OK", style: .default, handler: nil)]
-    ) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    func showAlert(title: String,
+                   message: String? = nil,
+                   actions: [UIAlertAction] = [UIAlertAction(title: "OK", style: .default, handler: nil)],
+                   preferredStyle: UIAlertController.Style = .alert) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true)
     }
