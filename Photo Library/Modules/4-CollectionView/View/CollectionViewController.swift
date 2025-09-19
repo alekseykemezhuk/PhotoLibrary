@@ -8,7 +8,8 @@ final class CollectionViewController: UIViewController {
     private var mainStackView = UIStackView()
     private var buttonsStackView = ButtonsStackView()
     private let collectionView = UICollectionView(frame: .zero,
-                                                  collectionViewLayout: UICollectionViewLayout())
+                                                  collectionViewLayout: UICollectionViewFlowLayout())
+    private let activityIndicator = UIActivityIndicatorView()
     
     // MARK: - Properties
     
@@ -35,7 +36,13 @@ final class CollectionViewController: UIViewController {
         setupConstraints()
         setupAppearance()
         setupActions()
+        setupCollectionView()
         bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadPhotos()
     }
     
     // MARK: - Setup methods
@@ -43,6 +50,7 @@ final class CollectionViewController: UIViewController {
     private func setupHierarchy() {
         mainStackView = UIStackView(arrangedSubviews: [collectionView, buttonsStackView])
         view.addSubview(mainStackView)
+        view.addSubview(activityIndicator)
     }
     
     private func setupConstraints() {
@@ -58,6 +66,10 @@ final class CollectionViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(layout.stackViewSpacing)
             make.height.equalTo(mainStackView.snp.height).multipliedBy(layout.buttonsStackMultiplier)
         }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func setupAppearance() {
@@ -68,8 +80,15 @@ final class CollectionViewController: UIViewController {
         mainStackView.spacing = layout.stackViewSpacing
         mainStackView.distribution = .fill
         
+        collectionView.collectionViewLayout = makeCollectionViewLayout()
+        collectionView.backgroundColor = .black
+        
         buttonsStackView.setupButtonsAppearance(firstButtonTitle: viewModel.strings.changePasswordButtonTitle,
                                                 secondButtonTitle: viewModel.strings.addButtonTitle)
+        
+        activityIndicator.color = .white
+        activityIndicator.style = .large
+        activityIndicator.hidesWhenStopped = true
     }
     
     private func setupActions() {
@@ -82,9 +101,25 @@ final class CollectionViewController: UIViewController {
         }, for: .touchUpInside)
     }
     
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    }
+    
     // MARK: - Bindings
     
     private func bindViewModel() {
+        viewModel.onPhotosUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
+        viewModel.onLoadingStateChanged = { [weak self] isLoading in
+            isLoading ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
+        }
+        
         viewModel.onUpdatePasswordSuccess = { [weak self] in
             self?.showAlert(title: self?.viewModel.strings.passwordChangeSuccessTitle ?? "",
                             message: self?.viewModel.strings.passwordChangeSuccessMessage ?? "")
@@ -102,6 +137,17 @@ final class CollectionViewController: UIViewController {
     
     // MARK: - Private methods
     
+    private func makeCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let collectionViewlayout = UICollectionViewFlowLayout()
+        let itemSpacing = layout.collectionViewItemSpacing
+        let numberOfColumns = layout.collectionViewColumns
+        collectionViewlayout.minimumLineSpacing = itemSpacing
+        collectionViewlayout.minimumInteritemSpacing = itemSpacing
+        let side = (view.frame.width - (numberOfColumns - 1)) / numberOfColumns
+        collectionViewlayout.itemSize = CGSize(width: side, height: side)
+        return collectionViewlayout
+    }
+    
     private func showChangePasswordAlert() {
         showTextFieldAlert(
             title: viewModel.strings.changePasswordAlertTitle,
@@ -114,4 +160,27 @@ final class CollectionViewController: UIViewController {
             self?.viewModel.updatePassword(newPassword)
         }
     }
+}
+
+    // MARK: - Extensions
+
+extension CollectionViewController: UICollectionViewDelegate {
+    
+}
+
+extension CollectionViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell",
+                                                            for: indexPath) as? CollectionViewCell
+        else { return UICollectionViewCell() }
+        let image = viewModel.photos[indexPath.item]
+        cell.configure(with: image)
+        return cell
+    }
+    
+    
 }
