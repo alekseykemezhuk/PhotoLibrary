@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 final class CollectionViewModel: CollectionViewModelProtocol {
     

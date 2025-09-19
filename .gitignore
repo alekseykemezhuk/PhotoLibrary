@@ -138,3 +138,5 @@ xcuserdata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,macos,swift,swiftpackagemanager
+/Photo Library.xcodeproj/project.pbxproj
+/Photo Library.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
