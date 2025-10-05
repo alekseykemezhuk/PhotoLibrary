@@ -1,7 +1,6 @@
 import Foundation
-import UIKit
 
-final class PhotoManager {
+final class PhotoManager: PhotoManagerProtocol {
     
     // MARK: - Properties
     
@@ -16,8 +15,7 @@ final class PhotoManager {
     
     // MARK: - Save
     
-    func savePhoto(_ image: UIImage) -> String? {
-        guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
+    func savePhoto(_ data: Data) -> String? {
         let fileName = UUID().uuidString + ".jpg"
         let url = directory.appendingPathComponent(fileName)
         
@@ -33,11 +31,12 @@ final class PhotoManager {
     
     // MARK: - Load
     
-    func loadPhotos() -> [UIImage] {
+    func loadPhotos() -> [PhotoModel] {
         let keys = UserDefaults.standard.stringArray(forKey: userDefaultsKey) ?? []
         return keys.compactMap { fileName in
             let url = directory.appendingPathComponent(fileName)
-            return UIImage(contentsOfFile: url.path)
+            guard let data = try? Data(contentsOf: url) else { return nil }
+            return PhotoModel(fileName: fileName, data: data)
         }
     }
     
@@ -53,6 +52,17 @@ final class PhotoManager {
         
         keys.remove(at: index)
         UserDefaults.standard.set(keys, forKey: userDefaultsKey)
+    }
+    
+    // MARK: - Delete All
+    
+    func deleteAllPhotos() {
+        let keys = UserDefaults.standard.stringArray(forKey: userDefaultsKey) ?? []
+        for fileName in keys {
+            let url = directory.appendingPathComponent(fileName)
+            try? FileManager.default.removeItem(at: url)
+        }
+        UserDefaults.standard.removeObject(forKey: userDefaultsKey)
     }
     
     // MARK: - Helpers

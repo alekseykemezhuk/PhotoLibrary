@@ -1,6 +1,6 @@
 import Foundation
 
-final class PasswordFormatValidator: PasswordValidating {
+final class PasswordFormatValidator: PasswordFormatValidatorProtocol {
     
     func isValid(_ password: String) -> Bool {
         let regex = "^[A-Za-z0-9]{4,16}$"
