@@ -9,13 +9,16 @@ final class LoginViewModel: LoginViewModelProtocol {
     // MARK: - Properties
 
     let strings: LoginStrings
-    let keychainService: KeychainServiceProtocol
+    private let keychainService: KeychainServiceProtocol
+    private let photoManager: PhotoManagerProtocol
     
     // MARK: - Init
     
-    init(strings: LoginStrings, keychainService: KeychainServiceProtocol = KeychainService()) {
+    init(strings: LoginStrings, keychainService: KeychainServiceProtocol = KeychainService(),
+         photoManager: PhotoManagerProtocol = PhotoManager.shared) {
         self.strings = strings
         self.keychainService = keychainService
+        self.photoManager = photoManager
     }
     
     // MARK: - Main Flow
@@ -30,6 +33,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     
     func resetPassword() {
         keychainService.set("", for: "password")
+        photoManager.deleteAllPhotos()
         onResetPassword?()
     }
     
