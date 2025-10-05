@@ -1,26 +1,30 @@
 import AVFoundation
-import UIKit
 
 final class AddPhotoViewModel: AddPhotoViewModelProtocol {
     
     // MARK: - Callbacks
     
-    var onPhotoSaved: ((UIImage) -> Void)?
+    var onPhotoSaved: (() -> Void)?
     
     // MARK: - Properties
     
     var strings: AddPhotoStrings
-    
+    private let photoManager: PhotoManagerProtocol
+
     // MARK: - Init
     
-    init(strings: AddPhotoStrings) {
+    init(strings: AddPhotoStrings,
+         photoManager: PhotoManagerProtocol = PhotoManager.shared) {
         self.strings = strings
+        self.photoManager = photoManager
     }
     
     // MARK: - Main Flow
     
-    func savePhoto(_ image: UIImage) {
-        onPhotoSaved?(image)
+    func savePhoto(imageData: Data) {
+        if photoManager.savePhoto(imageData) != nil {
+            onPhotoSaved?()
+        }
     }
 
     func isCameraPermissionGranted() -> Bool {

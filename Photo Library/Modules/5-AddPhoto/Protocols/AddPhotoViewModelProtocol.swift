@@ -1,8 +1,8 @@
-import UIKit
+import Foundation
 
 protocol AddPhotoViewModelProtocol: AnyObject {
-    var onPhotoSaved: ((UIImage) -> Void)? { get set }
+    var onPhotoSaved: (() -> Void)? { get set }
     var strings: AddPhotoStrings { get }
-    func savePhoto(_ image: UIImage)
+    func savePhoto(imageData: Data)
     func isCameraPermissionGranted() -> Bool
 }

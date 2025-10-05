@@ -35,6 +35,7 @@ final class AddPhotoViewController: UIViewController {
         setupConstraints()
         setupAppearance()
         setupActions()
+        bindViewModel()
         showImagePicker()
     }
     
@@ -76,19 +77,26 @@ final class AddPhotoViewController: UIViewController {
     
     private func setupActions() {
         buttonsStackView.firstButton.addAction(UIAction { [weak self] _ in
-            self?.coordinator?.didFinishAddPhotoFlow()
+            self?.coordinator?.didFinishFlow()
         }, for: .touchUpInside)
         
         buttonsStackView.secondButton.addAction(UIAction { [weak self] _ in
-            guard let image = self?.imageView.image else { return }
-            self?.viewModel.savePhoto(image)
+            guard let imageData = self?.imageView.image?.pngData() else { return }
+            self?.viewModel.savePhoto(imageData: imageData)
         }, for: .touchUpInside)
+    }
+    
+    // MARK: - Binding
+    
+    private func bindViewModel() {
+        viewModel.onPhotoSaved = { [weak self] in
+            self?.coordinator?.didFinishFlow()
+        }
     }
     
     // MARK: - Private methods
     
     private func showImagePicker() {
-        
         let firstAlertAction = UIAlertAction(title: viewModel.strings.libraryActionTitle,
                                              style: .default) { [weak self] _ in
             self?.showPhotoLibraryPicker()
