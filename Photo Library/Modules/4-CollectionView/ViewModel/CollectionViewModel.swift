@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 final class CollectionViewModel: CollectionViewModelProtocol {
     
@@ -6,23 +6,26 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     
     var onPhotosUpdated: (() -> Void)?
     var onLoadingStateChanged: ((Bool) -> Void)?
-    var onUpdatePasswordSuccess: (() -> Void)?
-    var onUpdatePasswordError: (() -> Void)?
+    var onPasswordUpdated: (() -> Void)?
+    var onPasswordUpdateFailed: (() -> Void)?
     
     // MARK: - Properties
     
+    private(set) var photos: [PhotoModel] = []
+    
     var strings: CollectionViewStrings
-    private let photoManager = PhotoManager.shared
-    private(set) var photos: [UIImage] = []
-    private var passwordFormatValidator: PasswordValidating
-    private var keychainService: KeychainServiceProtocol
+    private let photoManager: PhotoManagerProtocol
+    private let passwordFormatValidator: PasswordFormatValidatorProtocol
+    private let keychainService: KeychainServiceProtocol
     
     // MARK: - Init
     
     init(strings: CollectionViewStrings,
-         passwordFormatValidator: PasswordValidating = PasswordFormatValidator(),
-         keychainService: KeychainServiceProtocol = KeychainService()) {
+         passwordFormatValidator: PasswordFormatValidatorProtocol = PasswordFormatValidator(),
+         keychainService: KeychainServiceProtocol = KeychainService(),
+         photoManager: PhotoManagerProtocol = PhotoManager.shared) {
         self.strings = strings
+        self.photoManager = photoManager
         self.passwordFormatValidator = passwordFormatValidator
         self.keychainService = keychainService
     }
@@ -30,10 +33,13 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     // MARK: - Main flow
     
     func loadPhotos() {
+        guard isNeededReloadData() else { return }
+        
         onLoadingStateChanged?(true)
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             let loadedPhotos = self.photoManager.loadPhotos()
+            
             DispatchQueue.main.async {
                 self.photos = loadedPhotos
                 self.onPhotosUpdated?()
@@ -42,43 +48,16 @@ final class CollectionViewModel: CollectionViewModelProtocol {
         }
     }
     
-    func addPhoto(_ image: UIImage) {
-        onLoadingStateChanged?(true)
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-            if self.photoManager.savePhoto(image) != nil {
-                DispatchQueue.main.async {
-                    self.photos.append(image)
-                    self.onPhotosUpdated?()
-                    self.onLoadingStateChanged?(false)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.onLoadingStateChanged?(false)
-                }
-            }
-        }
+    func isNeededReloadData() -> Bool {
+        return photos.count != photoManager.loadPhotos().count
     }
-    
-    func deletePhoto(at index: Int) {
-        onLoadingStateChanged?(true)
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-            self.photoManager.deletePhoto(at: index)
-            DispatchQueue.main.async {
-                self.photos.remove(at: index)
-                self.onPhotosUpdated?()
-                self.onLoadingStateChanged?(false)
-            }
-        }
-    }
-    
+
     func updatePassword(_ newPassword: String) {
         if passwordFormatValidator.isValid(newPassword) {
             keychainService.set(newPassword, for: "password")
-            onUpdatePasswordSuccess?()
+            onPasswordUpdated?()
         } else {
-            onUpdatePasswordError?()
+            onPasswordUpdateFailed?()
         }
     }
     

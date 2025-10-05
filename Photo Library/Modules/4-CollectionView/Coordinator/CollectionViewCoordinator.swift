@@ -6,7 +6,6 @@ final class CollectionViewCoordinator: CoordinatorProtocol {
     
     var navigationController: UINavigationController
     private var childCoordinators: [CoordinatorProtocol] = []
-    private let collectionViewModel = CollectionViewModel(strings: CollectionViewStrings())
     
     // MARK: - Init
     
@@ -17,17 +16,26 @@ final class CollectionViewCoordinator: CoordinatorProtocol {
     // MARK: - Coordinator flow
     
     func start() {
-        let collectionViewController = CollectionViewController(viewModel: collectionViewModel)
+        let strings = CollectionViewStrings()
+        let viewModel = CollectionViewModel(strings: strings)
+        let collectionViewController = CollectionViewController(viewModel: viewModel)
         collectionViewController.coordinator = self
         navigationController.setViewControllers([collectionViewController], animated: true)
     }
     
     func showAddPhotoFlow() {
-        let addPhotoCoordinator = AddPhotoCoordinator(navigationController: navigationController,
-                                                      collectionViewModel: collectionViewModel)
+        let addPhotoCoordinator = AddPhotoCoordinator(navigationController: navigationController)
         childCoordinators.append(addPhotoCoordinator)
         addPhotoCoordinator.parentCoordinator = self
         addPhotoCoordinator.start()
+    }
+    
+    func showPhotoViewerFlow(selectedPhotoIndex: Int) {
+        let photoViewerCoordinator = PhotoViewerCoordinator(navigationController: navigationController,
+                                                            selectedPhotoIndex: selectedPhotoIndex)
+        childCoordinators.append(photoViewerCoordinator)
+        photoViewerCoordinator.parentCoordinator = self
+        photoViewerCoordinator.start()
     }
     
     func removeChildCoordinator(_ coordinator: CoordinatorProtocol) {

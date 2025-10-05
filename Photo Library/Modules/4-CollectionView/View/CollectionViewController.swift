@@ -14,13 +14,16 @@ final class CollectionViewController: UIViewController {
     // MARK: - Properties
     
     weak var coordinator: CollectionViewCoordinator?
+    private let photoManager: PhotoManagerProtocol
     private let viewModel: CollectionViewModelProtocol
     private let layout = Layout.self
     
     // MARK: - Init
     
-    init(viewModel: CollectionViewModelProtocol) {
+    init(viewModel: CollectionViewModelProtocol,
+         photoManager: PhotoManagerProtocol = PhotoManager.shared) {
         self.viewModel = viewModel
+        self.photoManager = photoManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,12 +105,12 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     
-    // MARK: - Bindings
+    // MARK: - Binding
     
     private func bindViewModel() {
         viewModel.onPhotosUpdated = { [weak self] in
@@ -116,20 +119,20 @@ final class CollectionViewController: UIViewController {
             }
         }
         
-        viewModel.onLoadingStateChanged = { [weak self] isLoading in
-            isLoading ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
+        viewModel.onLoadingStateChanged = { [weak self] isActive in
+            isActive ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
         }
         
-        viewModel.onUpdatePasswordSuccess = { [weak self] in
+        viewModel.onPasswordUpdated = { [weak self] in
             self?.showAlert(title: self?.viewModel.strings.passwordChangeSuccessTitle ?? "",
                             message: self?.viewModel.strings.passwordChangeSuccessMessage ?? "")
         }
         
-        viewModel.onUpdatePasswordError = { [weak self] in
+        viewModel.onPasswordUpdateFailed = { [weak self] in
             self?.showAlert(title: self?.viewModel.strings.passwordChangeErrorTitle ?? "",
                             message: self?.viewModel.strings.passwordChangeErrorMessage ?? "",
                             actions: [UIAlertAction(title: self?.viewModel.strings.okActionTitle,
-                                                    style: .default) { [weak self] _ in
+                                                    style: .default) { _ in
                 self?.showChangePasswordAlert()
             }])
         }
@@ -165,19 +168,24 @@ final class CollectionViewController: UIViewController {
     // MARK: - Extensions
 
 extension CollectionViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        coordinator?.showPhotoViewerFlow(selectedPhotoIndex: indexPath.row)
+    }
 }
 
 extension CollectionViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return viewModel.photos.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell",
                                                             for: indexPath) as? CollectionViewCell
         else { return UICollectionViewCell() }
-        let image = viewModel.photos[indexPath.item]
+        let imageData = viewModel.photos[indexPath.row].data
+        let image = UIImage(data: imageData)
         cell.configure(with: image)
         return cell
     }

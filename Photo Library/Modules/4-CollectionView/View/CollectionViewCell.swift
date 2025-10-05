@@ -3,7 +3,7 @@ import SnapKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    // MARK: - UIElements
+    // MARK: - UI Elements
     
     private let imageView = UIImageView()
     
@@ -36,7 +36,6 @@ class CollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
-    
     
     // MARK: - Configure
     
