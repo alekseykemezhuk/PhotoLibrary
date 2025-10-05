@@ -3,11 +3,18 @@ import SnapKit
 
 final class PasswordStackView: UIStackView {
 
+    // MARK: - UI Elements
+    
     private let label = UILabel()
     let textField = UITextField()
     let actionButton = UIButton(configuration: .filled())
+    
+    // MARK: - Properties
+    
     private let layout = Layout.self
     private let fonts = Fonts.self
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,6 +25,8 @@ final class PasswordStackView: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Setup methods
     
     private func setupHierarchy() {
         addArrangedSubview(label)
