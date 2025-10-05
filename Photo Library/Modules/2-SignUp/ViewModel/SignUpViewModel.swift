@@ -12,12 +12,12 @@ final class SignUpViewModel: SignUpViewModelProtocol {
     
     let strings: SignUpStrings
     private let keychainService: KeychainServiceProtocol
-    private let passwordFormatValidator: PasswordValidating
+    private let passwordFormatValidator: PasswordFormatValidatorProtocol
     
     // MARK: - Init
     
     init(strings: SignUpStrings, keychainService: KeychainServiceProtocol = KeychainService(),
-         passwordFormatValidator: PasswordValidating = PasswordFormatValidator()) {
+         passwordFormatValidator: PasswordFormatValidatorProtocol = PasswordFormatValidator()) {
         self.strings = strings
         self.keychainService = keychainService
         self.passwordFormatValidator = passwordFormatValidator

@@ -65,7 +65,7 @@ final class SignUpViewController: UIViewController {
         }, for: .touchUpInside)
     }
     
-    // MARK: - Bindings
+    // MARK: - Binding
     
     private func bindViewModel() {
         viewModel.onSignUpSuccess = { [weak self] in
