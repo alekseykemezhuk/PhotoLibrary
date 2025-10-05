@@ -10,7 +10,6 @@ enum Layout {
     static let buttonHeightMultiplier = 0.25
     static let buttonsStackMultiplier = 0.06
     
-    //Collection View layout:
     static let collectionViewItemSpacing: CGFloat = 1
     static let collectionViewColumns: CGFloat = 3
 }

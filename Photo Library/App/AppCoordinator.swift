@@ -27,16 +27,6 @@ final class AppCoordinator: CoordinatorProtocol {
         }
     }
     
-    func didResetPassword(_ coordinator: CoordinatorProtocol) {
-        childCoordinators.removeAll { $0 === coordinator }
-        showStart()
-    }
-    
-    func didFinishStartFlow(_ coordinator: CoordinatorProtocol) {
-        childCoordinators.removeAll { $0 === coordinator }
-        showCollectionView()
-    }
-    
     private func isLoggedIn() -> Bool {
         return keychainService.get("password") != nil && keychainService.get("password") != ""
     }
@@ -60,5 +50,15 @@ final class AppCoordinator: CoordinatorProtocol {
             navigationController: navigationController)
         childCoordinators.append(collectionViewCoordinator)
         collectionViewCoordinator.start()
+    }
+    
+    func didResetPassword(_ coordinator: CoordinatorProtocol) {
+        childCoordinators.removeAll { $0 === coordinator }
+        showStart()
+    }
+    
+    func didFinishStartFlow(_ coordinator: CoordinatorProtocol) {
+        childCoordinators.removeAll { $0 === coordinator }
+        showCollectionView()
     }
 }
